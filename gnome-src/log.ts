@@ -32,7 +32,7 @@ export const log_header = (type: LogType): string => {
 
 
 /**
- * @name log
+ * @name flog
  * Logs a message to the console
  * 
  * @param {LogType} type - The type of log
@@ -40,27 +40,12 @@ export const log_header = (type: LogType): string => {
  * 
  * @returns {void} - Nothing, it just logs
  */
-export const log = (type: LogType, ...args: Array<unknown>): void => {
+export const flog = (type: LogType, ...args: Array<unknown>): void => {
     // -- Only log if we are in debug mode or an ERROR has occured
     // if (!LOG && type !== log_types.ERROR) return;
     const header = log_header(type),
         bold_style = 'font-weight: bold;';
 
-    switch (type) {
-    case log_types.INFO:
-        console.info(`%c${header}`, bold_style, ...args);
-        break;
-
-    case log_types.WARN:
-        console.warn(`%c${header}`, bold_style, ...args);
-        break;
-
-    case log_types.ERROR:
-        console.error(`%c${header}`, bold_style, ...args);
-        break;
-
-    case log_types.LOG:
-        console.log(`%c${header}`, bold_style, ...args);
-        break;
-    }
+    // -- Create the message, so the header, bolded, then the args
+    print(`%c${header} ${bold_style}`, ...args);
 };

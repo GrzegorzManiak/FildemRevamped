@@ -46,14 +46,35 @@ function gse_build(options) {
         console.log(`Build complete. Zip file: ${zipFilename}\n`);
 
 
-        // -- Enable the extension
+        // -- Remove the old extension if it exists
+        const remove_cmd = `gnome-extensions uninstall ${metadata.uuid}`;
+        console.log(`Removing old extension with: ${remove_cmd}`);
+
+        // -- Run the command
+        exec(remove_cmd, (error, stdout, stderr) => {
+            console.log(`stdout: ${stdout}`);
+            if (error) { console.log(`error: ${error.message}`); }
+        });
+        
+
+        // -- Install the extension
         const install_cmd = `gnome-extensions install -f ${metadata.uuid}.zip`;
         console.log(`Installing extension with: ${install_cmd}`);
 
         // -- Run the command
         exec(install_cmd, (error, stdout, stderr) => {
             console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
+            if (error) { console.log(`error: ${error.message}`); }
+        });
+
+
+        // -- Enable the extension
+        const enable_cmd = `gnome-extensions enable ${metadata.uuid}`;
+        console.log(`Enabling extension with: ${enable_cmd}`);
+
+        // -- Run the command
+        exec(enable_cmd, (error, stdout, stderr) => {
+            console.log(`stdout: ${stdout}`);
             if (error) { console.log(`error: ${error.message}`); }
         });
     });
@@ -71,7 +92,6 @@ function compile_schemas(zip) {
         // -- Run the command
         exec(schema_cmd, (error, stdout, stderr) => {
             console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
             if (error) { 
                 console.log(`error: ${error.message}`); 
                 return reject();
