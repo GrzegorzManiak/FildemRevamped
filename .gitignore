@@ -28,3 +28,5 @@ MANIFEST
 # Sublime project stuff
 *.sublime-project
 *.sublime-workspace
+
+node_modules/

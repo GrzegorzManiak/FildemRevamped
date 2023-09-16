@@ -5,9 +5,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const BundleTracker = require('webpack-bundle-tracker');
 const happyThreadPool = HappyPack.ThreadPool({ size: 6 });
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const randomWords = require('random-words');
-
-const fmr_root = 'FIldemRevamed@Grzegorz.ie';
+const fmr_root = 'FildemRevamped@grzegorz.ie';
 
 module.exports = {
     mode: 'production',
@@ -70,24 +68,6 @@ module.exports = {
             },
             mangle: true,
         }})],
-        // splitChunks: {
-        //     chunks: 'all',
-        //     minSize: 0,
-        //     maxAsyncRequests: Infinity,
-        //     maxInitialRequests: Infinity,
-        //     cacheGroups: {
-        //         vendor: {
-        //             test: /[\\/]node_modules[\\/]/,
-        //             name(module) {
-        //                 const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-        //                 return `npm.${packageName.replace('@', '')}`;
-        //             },
-        //             chunks: 'all',
-        //             enforce: true,
-        //         },
-        //     },
-        // },
-        // runtimeChunk: true,
         removeAvailableModules: false,
         removeEmptyChunks: false,
     },
@@ -96,28 +76,17 @@ module.exports = {
             id: 'babel',
             threadPool: happyThreadPool,
             loaders: ['babel-loader?cacheDirectory=true'],
+
         }),
         // new BundleAnalyzerPlugin(),
-        new BundleTracker({filename: path.resolve(__dirname, fmr_root, './dist/webpack-stats.json')}),
-        new CleanWebpackPlugin(),
+        new BundleTracker({filename: path.resolve(__dirname, fmr_root, './webpack-stats.json')}),
+        new CleanWebpackPlugin()
     ],
     target: 'web',
     output: {
-        // filename: ({ chunk: { name } }) => {
-        //     // -- Generate the random string
-        //     const randomString = randomWords({ 
-        //         exactly: 3, 
-        //         minLength: 4,
-        //         join: '-',
-        //         seed: name
-        //     });
-
-        //     // -- Return the filename
-        //     return `${name}-${randomString}.js`;
-        // },
         filename: '[name].js',
         sourceMapFilename: '[name].js.map',
-        path: path.resolve(__dirname, fmr_root, './dist'),
+        path: path.resolve(__dirname, fmr_root),
     },
     devtool: 'source-map'
 };

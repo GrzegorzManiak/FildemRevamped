@@ -1,5 +1,5 @@
 <schemalist gettext-domain="gnome-shell-extensions">
-	<schema id="org.gnome.shell.extensions.fildem-global-menu" path="/org/gnome/shell/extensions/fildem-global-menu/">
+	<schema id="org.gnome.shell.extensions.fildem-revamped" path="/org/gnome/shell/extensions/fildem-revamped/">
 		<key type="i" name="min-padding">
 			<range min="0" max="50"/>
 			<default>6</default>

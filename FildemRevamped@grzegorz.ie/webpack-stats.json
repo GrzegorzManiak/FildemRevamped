@@ -1,0 +1,18 @@
+{
+  "status": "done",
+  "assets": {
+    "extension.js": {
+      "name": "extension.js",
+      "path": "/home/gmaniak/GitHub/FildemRevamped/FildemRevamped@grzegorz.ie/extension.js"
+    },
+    "extension.js.map": {
+      "name": "extension.js.map",
+      "path": "/home/gmaniak/GitHub/FildemRevamped/FildemRevamped@grzegorz.ie/extension.js.map"
+    }
+  },
+  "chunks": {
+    "extension": [
+      "extension.js"
+    ]
+  }
+}
