@@ -1,10 +1,13 @@
 {
   "compilerOptions": {   
     "lib": ["ESNext"],
-    "types": [],
+    "types": [
+    ],
     "target": "ESNext",
-    "module": "CommonJS",
-    "moduleResolution": "node"
+    "module": "ES6",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "removeComments": true,
   },
   "include": [
       "gnome-src/*.ts"

@@ -85,16 +85,30 @@ class GlobalExtension {
 
 
 
-/**
- * @name init
- * This function is called when the extension is loaded
- * by gnome-shell.
- * 
- * @param {ExtensionMetadata} meta - The metadata of the extension
- * 
- * @returns {GlobalExtension} The extension
- */
-function init(meta: ExtensionMetadata): GlobalExtension {
-    flog('INFO', 'Initializing extension: ', meta);
-    return GlobalExtension.get_instance();
+export class EntryPoint {
+
+    /**
+     * @name init
+     * This function is called when the extension is loaded
+     * by gnome-shell.
+     * 
+     * @param {ExtensionMetadata} meta - The metadata of the extension
+     * 
+     * @returns {GlobalExtension} The extension
+     */
+    static init(meta: ExtensionMetadata): GlobalExtension {
+        flog('INFO', 'Initializing extension: ', meta);
+        return GlobalExtension.get_instance();
+    }
+    
+
+
+
+    static enable(): void {
+        GlobalExtension.get_instance().enable();
+    }
+
+    static disable(): void {
+        GlobalExtension.get_instance().disable();
+    }
 }

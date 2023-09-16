@@ -1,0 +1,2 @@
+libmutter-Message: 18:23:49.929: Running GNOME Shell (using mutter 44.4) as a Wayland display server
+Failed to setup: Could not take control: GDBus.Error:System.Error.EBUSY: Device or resource busy

@@ -8,5 +8,6 @@
   ],
   "url": "https://github.com/GrzegorzManiak/FildemRevamped",
   "uuid": "FildemRevamped@grzegorz.ie",
-  "version": 1
+  "version": 1,
+  "gettext-domain": "fildem-revamped"
 }
