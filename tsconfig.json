@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "ES6",
+      "lib": ["es5", "es6", "dom"],
+      "declaration": false,
+      "noImplicitAny": false,
+      "removeComments": true,
+      "esModuleInterop": true,
+      "inlineSourceMap": true,
+      "allowJs": true,
+      "moduleResolution": "node"
+    }
+  }
