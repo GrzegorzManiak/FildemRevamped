@@ -50,8 +50,8 @@ class AppMenuService(dbus.service.Object):
 
 class MyService(dbus.service.Object):
 
-	BUS_PATH = '/com/gonzaarcr/appmenu'
-	BUS_NAME = 'com.gonzaarcr.appmenu'
+	BUS_PATH = '/com/grzegorzm/fildemrevamped'
+	BUS_NAME = 'com.grzegorzm.fildemrevamped'
 
 	def __init__(self):
 		self.bus_name = dbus.service.BusName(self.BUS_NAME, bus=dbus.SessionBus())

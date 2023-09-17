@@ -2,6 +2,7 @@ import { ui } from '@girs/gnome-shell';
 import { St as StTypes } from '@girs/st-12';
 import { Clutter } from '@girs/clutter-12';
 import MenuBar from './menu_bar';
+import { flog } from '../log';
 const St = imports.gi.St;
 
 class MenuItem extends ui.panelMenu.Button {
@@ -78,6 +79,7 @@ class MenuItem extends ui.panelMenu.Button {
         actor: StTypes.Button,
         event: Clutter.Event
     ): boolean {
+        flog('INFO', `Button '${this._label}' was clicked`);
         return true;
     }
 

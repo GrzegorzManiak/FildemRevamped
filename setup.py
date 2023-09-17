@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
 	long_description = fh.read()
 
 setuptools.setup(
-	name='fildem',
+	name='FildemRevamped',
 	version=fildem.__version__,
 	author='Gonzalo',
 	author_email='gonzaarcr@gmail.com',
@@ -16,7 +16,6 @@ setuptools.setup(
 	url='https://github.com/gonzaarcr/Fildem',
 	packages=setuptools.find_packages(),
 	data_files=[
-		('share/applications', ['fildem-hud.desktop'])
 	],
 	install_requires=[
 		'PyGObject>=3.30.0'
@@ -32,8 +31,7 @@ setuptools.setup(
 	},
 	entry_points={
 		'console_scripts': [
-			'fildem = fildem.run:main',
-			'fildem-hud = fildem.inithud:main'
+			'fildemr = fildem.run:main',
 		]
 	}
 )

@@ -47,5 +47,5 @@ export const flog = (type: LogType, ...args: Array<unknown>): void => {
         bold_style = 'font-weight: bold;';
 
     // -- Create the message, so the header, bolded, then the args
-    print(`${header}`, ...args);
+    print(`[FILDEM REVAMPED] ${header}`, ...args);
 };

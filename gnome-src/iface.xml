@@ -1,5 +1,5 @@
 <node>
-  	<interface name="com.gonzaarcr.appmenu" path="/com/gonzaarcr/appmenu">
+  	<interface name="com.grzegorzm.fildemrevamped" path="/com/grzegorzm/fildemrevamped">
 		<method name="EchoSignal">
 			<arg type="s" direction="in" name="menu"/>
 			<arg type="u" direction="in" name="x"/>

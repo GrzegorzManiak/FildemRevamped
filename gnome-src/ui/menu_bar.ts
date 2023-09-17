@@ -12,6 +12,8 @@ export default class MenuBar {
     private _menu_btns: Array<MenuItem> = [];
     private _mouse_over: boolean = false;
 
+    private _enabled: boolean = true;
+
     private constructor(uuid: string) {
         flog('INFO', 'MenuBar constructor');
         this._uuid = uuid;
@@ -49,6 +51,19 @@ export default class MenuBar {
         flog('INFO', 'Adding event listeners to the menu bar');
         this._panel_events.push(Main.panel.connect('enter-event', this._on_enter.bind(this)));
         this._panel_events.push(Main.panel.connect('leave-event', this._on_leave.bind(this)));
+    }
+
+
+
+    /**
+     * @name _update_state
+     * Updates the state of the menu bar
+     * depending on if the menu bar is enabled or not
+     * 
+     * @returns {void} Nothing
+     */
+    private _update_state(): void {
+        flog('INFO', 'Updating the state of the menu bar');
     }
 
 
@@ -93,11 +108,17 @@ export default class MenuBar {
     //
 
     private _on_enter(): void {
+        // -- No need to do anything if we are already over
+        if (this._mouse_over) return;
         this._mouse_over = true;
+        
     }
 
     private _on_leave(): void {
+        // -- No need to do anything if we are already not over
+        if (!this._mouse_over) return;
         this._mouse_over = false;
+
     }
 
 
@@ -106,6 +127,11 @@ export default class MenuBar {
     // -- Getters and Setters
     //
     public get mouse_over(): boolean {
-        return this._mouse_over;
-    }
+        return this._mouse_over; }
+
+    public get enabled(): boolean {
+        return this._enabled; }
+
+    public set enabled(value: boolean) {
+        this._enabled = value; this._update_state(); }
 }

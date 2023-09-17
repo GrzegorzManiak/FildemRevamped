@@ -85,6 +85,8 @@ class GlobalExtension {
      */
     public enable(): void {
         flog('INFO', 'Enabling extension: ', Me.metadata.uuid);
+        this._menu_proxy.rebind();
+        this._menu_bar.enabled = true;
     }
 
 
@@ -98,6 +100,8 @@ class GlobalExtension {
      */
     public disable(): void {
         flog('WARN', 'Disabling extension: ', Me.metadata.uuid);
+        this._menu_proxy.destroy();
+        this._menu_bar.enabled = false;
     }
 }
 

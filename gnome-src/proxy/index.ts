@@ -24,6 +24,9 @@ export default class MenuProxy {
     private _dbus_proxy: GioTypes.DBusProxy;
     private _handler_ids: number[] = [];
 
+    private _send_top_level_menus_listeners: Array<() => void> = [];
+    private _menu_on_off_listeners: Array<(state: boolean) => void> = [];
+
     private constructor(
         public readonly uuid: string
     ) { 
@@ -40,20 +43,6 @@ export default class MenuProxy {
 
         // -- Remove the path attribute
         this._iface_raw = this._iface_raw.replace(path_regex, '');
-
-
-        // -- DBus
-        flog('INFO', 'Creating DBus proxy');
-        const wrapper = Gio.DBusProxy.makeProxyWrapper(this._iface_raw);
-        this._dbus_proxy = wrapper(
-            Gio.DBus.session, 
-            this.bus_name, 
-            this.bus_path,
-            this._on_proxy_read.bind(this)
-        );
-        flog('INFO', 'DBus proxy created');
-
-
     }
 
 
@@ -84,8 +73,24 @@ export default class MenuProxy {
     public destroy(): void {
         flog('INFO', 'Destroying MenuProxy');
         this._handler_ids.forEach(id => this._dbus_proxy.disconnectSignal(id));
-        this._dbus_proxy = null;
-        MenuProxy._instance = null;
+    }
+
+
+
+    /**
+     * @name rebind
+     * Rebinds the MenuProxy after it has been destroyed
+     * 
+     * @returns {void} Nothing
+     */
+    public rebind(): void {
+        flog('INFO', 'Rebinding MenuProxy');
+        this._dbus_proxy = Gio.DBusProxy.makeProxyWrapper(this._iface_raw)(
+            Gio.DBus.session,
+            this.bus_name,
+            this.bus_path,
+            this._on_proxy_read.bind(this)
+        );
     }
 
 
@@ -145,6 +150,54 @@ export default class MenuProxy {
 
 
 
+    /**
+     * @name add_send_top_level_menus_listener
+     * Adds a listener for when the top level menus are sent
+     * 
+     * @param {() => void} listener - The listener to add
+     * 
+     * @returns {() => void} A function to remove the listener
+     */
+    public add_send_top_level_menus_listener(
+        listener: () => void
+    ): () => void {
+        flog('INFO', 'Adding send top level menus listener');
+        this._send_top_level_menus_listeners.push(listener);
+
+        // -- Return the function to remove the listener
+        return () => {
+            flog('INFO', 'Removing send top level menus listener');
+            const index = this._send_top_level_menus_listeners.indexOf(listener);
+            if (index > -1) this._send_top_level_menus_listeners.splice(index, 1);
+        }
+    }
+
+
+
+    /**
+     * @name add_menu_on_off_listener
+     * Adds a listener for when the menu is turned on or off
+     * 
+     * @param {(state: boolean) => void} listener - The listener to add
+     * 
+     * @returns {() => void} A function to remove the listener
+     */
+    public add_menu_on_off_listener(
+        listener: (state: boolean) => void
+    ): () => void {
+        flog('INFO', 'Adding menu on off listener');
+        this._menu_on_off_listeners.push(listener);
+
+        // -- Return the function to remove the listener
+        return () => {
+            flog('INFO', 'Removing menu on off listener');
+            const index = this._menu_on_off_listeners.indexOf(listener);
+            if (index > -1) this._menu_on_off_listeners.splice(index, 1);
+        }
+    }
+
+
+
     private async _on_send_top_level_menus(
         proxy: GioTypes.DBusProxy,
         sender_name: string,
@@ -152,6 +205,7 @@ export default class MenuProxy {
         invocation: GioTypes.DBusMethodInvocation
     ): Promise<void> {
         flog('INFO', `send_top_level_menus: ${sender_name}, ${args}, ${invocation}`);
+        this._send_top_level_menus_listeners.forEach(listener => listener());
     }
 
     private async _on_send_top_level_options_signal(
@@ -188,5 +242,17 @@ export default class MenuProxy {
         invocation: GioTypes.DBusMethodInvocation
     ): Promise<void> {
         flog('INFO', `menu_on_off: ${sender_name}, ${args}, ${invocation}`);
+
+        // -- Ensure that the args are correct
+        if (
+            args.length !== 1 ||
+            typeof args[0] !== 'boolean'
+        ) {
+            flog('ERROR', 'The args are not correct');
+            throw new Error('The args are not correct');
+        }
+
+        // -- Call the listeners
+        this._menu_on_off_listeners.forEach(listener => listener(args[0] as boolean));
     }
 }
