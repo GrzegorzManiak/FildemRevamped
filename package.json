@@ -7,7 +7,7 @@
         "transpile": "webpack --config webpack.config.js",
         "install-ext": "node ./scripts/compile.js",
         "build-ext-builder": "tsc ./scripts/compile.ts",
-        "watch-ext": "nodemon -e js,ts -w ./gnome-src --exec \"npm run transpile && npm run install-ext\"",
+        "watch-ext": "nodemon -e js,ts -w ./client --exec \"npm run transpile && npm run install-ext\"",
         "debug-shell": "dbus-run-session -- gnome-shell --nested --wayland",
         "monitor-dbus": "dbus-monitor \"interface='com.grzegorzm.fildemrevamped',path='/com/grzegorzm/fildemrevamped'\"",
         "monitor-logs": "journalctl /usr/bin/gnome-shell -f -o cat",

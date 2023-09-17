@@ -11,8 +11,8 @@ const webpack = require('webpack');
 module.exports = {
     mode: 'production',
     entry: {
-        extension: './gnome-src/extension.ts',
-        prefs: './gnome-src/prefs.ts',
+        extension: './client/extension.ts',
+        prefs: './client/prefs.ts',
     },
     module: {
         rules: [

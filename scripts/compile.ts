@@ -33,7 +33,7 @@ const api_expose_script = `
 `;
 
 const FMR_DEST = 'FildemRevamped@grzegorz.ie';
-const FMR_ROOT = path.join(process.cwd(), 'gnome-src');
+const FMR_ROOT = path.join(process.cwd(), 'client');
 const copy_files = [
     "metadata.json",
     "stylesheet.css",

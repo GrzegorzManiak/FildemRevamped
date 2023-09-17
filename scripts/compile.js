@@ -48,7 +48,7 @@ var uuid = 'FildemRevamped@grzegorz.ie';
  */
 var api_expose_script = "\n    /**\n     * INJECTED BY COMP.TS SCRIPT\n     */\n\n    function init(meta) {\n        global.log('Initializing extension');\n        lib.EntryPoint.init(meta);\n    };\n\n    function enable() {\n        global.log('Enabling extension');\n        lib.EntryPoint.enable();\n    };\n\n    function disable() {\n        global.log('Disabling extension');\n        lib.EntryPoint.disable();\n    };\n";
 var FMR_DEST = 'FildemRevamped@grzegorz.ie';
-var FMR_ROOT = path.join(process.cwd(), 'gnome-src');
+var FMR_ROOT = path.join(process.cwd(), 'client');
 var copy_files = [
     "metadata.json",
     "stylesheet.css",
