@@ -1,3 +1,11 @@
+/**
+ * Docs for for GTK can be found here:
+ * https://docs.gtk.org/
+ * 
+ * Docs for the Types provided by GIRS can be found here:
+ * https://github.com/gjsify/types 
+ */
+
 import { misc, ExtensionMetadata, Extension } from '@girs/gnome-shell';
 const ExtensionUtils = misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension() as unknown as Extension;

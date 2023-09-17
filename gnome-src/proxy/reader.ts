@@ -3,8 +3,11 @@ import MenuProxy from './index';
 
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
-
 import Gjs from '@girs/gjs';
+
+// -- name and path regex
+export const name_regex = /name="([a-zA-Z0-9.\\\/]+)"/,
+    path_regex = /path="([a-zA-Z0-9.\\\/]+)"/;
 
 /**
  * @name construct_iface_path
@@ -79,14 +82,10 @@ export const get_bus_name_path = (
     path: string;
 } => {
 
-    // -- name and path regex
-    const name_regex = /name="([a-zA-Z0-9.\\\/]+)"/,
-        path_regex = /path="([a-zA-Z0-9.\\\/]+)"/;
-
     // -- Get the name and path
     const name = name_regex.exec(iface_raw),
         path = path_regex.exec(iface_raw);
-        
+
     // -- Check if we got a name and path
     if (!name || !path) {
         flog('ERROR', 'Could not get name or path from iface file');
