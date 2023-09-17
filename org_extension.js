@@ -377,6 +377,7 @@ const MenuBar = class MenuBar {
 	addMenuButton(label, setmargin) {
 		let menuButton = new MenuButton(label, this);
 		this._menuButtons.push(menuButton);
+		
 		const nItems = Main.panel._leftBox.get_children().length;
 		menuButton.hide();
 		if (setmargin)

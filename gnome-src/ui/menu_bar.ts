@@ -1,12 +1,16 @@
 import { flog } from '../log';
 import { ui } from '@girs/gnome-shell';
+import MenuItem from './menu_btn';
 const Main = ui.main;
 
 export default class MenuBar {
     private static _instance: MenuBar;
     private _uuid: string;
 
+    // -- Store the event listeners so that they can be removed later
     private _panel_events: Array<number> = [];
+    private _menu_btns: Array<MenuItem> = [];
+    private _mouse_over: boolean = false;
 
     private constructor(uuid: string) {
         flog('INFO', 'MenuBar constructor');
@@ -49,15 +53,59 @@ export default class MenuBar {
 
 
 
+    /**
+     * @name add_menu_btn
+     * Adds a menu button to the menu bar
+     * 
+     * @param {string} label - The label of the menu button
+     * @param {number} [left_margin=0] - The margin to add to the menu button
+     * 
+     * @returns {MenuItem} The menu button
+     */
+    public add_menu_btn(
+        label: string,
+        left_margin: number = 0
+    ): MenuItem {
+        flog('INFO', 'Adding menu button to the menu bar');
+        const new_button = new MenuItem(label, this);
+
+        // -- Add the button to the menu bar
+        this._menu_btns.push(new_button);
+
+        // -- Add the button to the menu bar
+        const time_in_ms = new Date().getTime();
+        Main.panel.addToStatusArea(
+            `${this._uuid}-menu-btn-${label}-${time_in_ms}`,
+            new_button,
+            left_margin,
+            'left'
+        );
+        flog('INFO', 'Added: ', `${this._uuid}-menu-btn-${label}-${time_in_ms}`);
+        
+        // -- Return the new button
+        return new_button;
+    }
+
+
+
     // 
     // -- Event Listeners
     //
 
     private _on_enter(): void {
-        flog('INFO', 'Mouse entered the menu bar');
+        this._mouse_over = true;
     }
 
     private _on_leave(): void {
-        flog('INFO', 'Mouse left the menu bar');
+        this._mouse_over = false;
+    }
+
+
+
+    //
+    // -- Getters and Setters
+    //
+    public get mouse_over(): boolean {
+        return this._mouse_over;
     }
 }

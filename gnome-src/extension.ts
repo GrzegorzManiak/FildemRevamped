@@ -39,6 +39,9 @@ class GlobalExtension {
         this._menu_proxy = MenuProxy.get_instance(uuid);
         this._menu_bar = MenuBar.get_instance(uuid);
 
+        // -- Add a test button
+        this._menu_bar.add_menu_btn('Test');
+
         // -- Check if Me is defined
         this._check_me();
     }

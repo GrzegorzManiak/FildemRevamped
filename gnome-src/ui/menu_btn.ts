@@ -4,7 +4,7 @@ import { Clutter } from '@girs/clutter-12';
 import MenuBar from './menu_bar';
 const St = imports.gi.St;
 
-export class MenuItem extends ui.panelMenu.Button {
+class MenuItem extends ui.panelMenu.Button {
     private _label: string;
     private _menu: MenuBar;
 
@@ -29,7 +29,6 @@ export class MenuItem extends ui.panelMenu.Button {
         this._menu = menu;
 
         this._construct();
-        this._init();
     }
 
 
@@ -96,3 +95,9 @@ export class MenuItem extends ui.panelMenu.Button {
         super.destroy();
     }
 }
+
+
+
+const GObject = imports.gi.GObject;
+export const rgc = GObject.registerClass(MenuItem);
+export default MenuItem;
