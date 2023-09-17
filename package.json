@@ -10,7 +10,8 @@
         "watch-ext": "nodemon -e js,ts -w ./gnome-src --exec \"npm run transpile && npm run install-ext\"",
         "debug-shell": "dbus-run-session -- gnome-shell --nested --wayland",
         "monitor-dbus": "dbus-monitor \"interface='com.grzegorzm.fildemrevamped',path='/com/grzegorzm/fildemrevamped'\"",
-        "monitor-logs": "journalctl /usr/bin/gnome-shell -f -o cat"
+        "monitor-logs": "journalctl /usr/bin/gnome-shell -f -o cat",
+        "watch-server": "nodemon -e py -w ./server --exec \"python3 ./server/run.py\""
     },
 
     "dependencies": {
