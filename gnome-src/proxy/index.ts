@@ -4,6 +4,9 @@ import { get_bus_name_path, path_regex, read_iface_file } from "./reader";
 import { Gio as GioTypes } from '@girs/gio-2.0';
 const Gio = imports.gi.Gio;
 
+import { GLib as GLibTypes } from '@girs/glib-2.0';
+const GLib = imports.gi.GLib;
+
 /**
  * @class MenuProxy
  * This is a singleton class that is used to to communicate with the
@@ -196,6 +199,31 @@ export default class MenuProxy {
         }
     }
 
+
+
+    /**
+     * @name window_switched
+     * Called by us when we detect that the window has switched
+     * 
+     * @param {Record<string, unknown>} win_data - The data of the window
+     * 
+     * @returns {void} Nothing
+     */
+    public window_switched(
+        win_data: Record<string, unknown>
+    ): void {
+        flog('INFO', 'Window switched');
+        this._dbus_proxy.call(
+            'WindowSwitched',
+            new GLib.Variant('(a{ss})', [win_data]),
+            Gio.DBusCallFlags.NONE,
+            -1,
+            null,
+            async (proxy: GioTypes.DBusProxy, res) => {
+                flog('INFO', 'Window switched callback: ', proxy, await res);
+            }
+        );
+    }
 
 
     private async _on_send_top_level_menus(

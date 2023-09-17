@@ -5,11 +5,14 @@
     "author": "GrzegorzManiak",
     "scripts": {
         "transpile": "webpack --config webpack.config.js",
-        "build": "node ./scripts/compile.js",
-        "build-builder": "tsc ./scripts/compile.ts",
-        "watch": "nodemon -e js,ts -w ./gnome-src --exec \"npm run transpile && npm run build\"",
-        "debug-shell": "dbus-run-session -- gnome-shell --nested --wayland"
+        "install-ext": "node ./scripts/compile.js",
+        "build-ext-builder": "tsc ./scripts/compile.ts",
+        "watch-ext": "nodemon -e js,ts -w ./gnome-src --exec \"npm run transpile && npm run install-ext\"",
+        "debug-shell": "dbus-run-session -- gnome-shell --nested --wayland",
+        "monitor-dbus": "dbus-monitor \"interface='com.grzegorzm.fildemrevamped',path='/com/grzegorzm/fildemrevamped'\"",
+        "monitor-logs": "journalctl /usr/bin/gnome-shell -f -o cat"
     },
+
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.18.6",
         "@girs/adw-1": "^1.3.3-3.2.0",

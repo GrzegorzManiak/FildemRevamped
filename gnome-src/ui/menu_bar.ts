@@ -1,7 +1,11 @@
 import { flog } from '../log';
 import { ui } from '@girs/gnome-shell';
 import MenuItem from './menu_btn';
+import MenuProxy from '../proxy';
+
 const Main = ui.main;
+const WinTracker = imports.gi.Shell.WindowTracker.get_default();
+const Shell = imports.gi.Shell;
 
 export default class MenuBar {
     private static _instance: MenuBar;
@@ -13,13 +17,18 @@ export default class MenuBar {
     private _mouse_over: boolean = false;
 
     private _enabled: boolean = true;
+    private _window_switch_listener_id: number = 0;
 
+    private _menu_proxy: MenuProxy;
+    
     private constructor(uuid: string) {
         flog('INFO', 'MenuBar constructor');
         this._uuid = uuid;
+        this._menu_proxy = MenuProxy.get_instance(uuid);
 
         // -- Add the event listeners
         this._add_event_listeners();
+        this._on_window_switch();
     }
 
 
@@ -51,6 +60,8 @@ export default class MenuBar {
         flog('INFO', 'Adding event listeners to the menu bar');
         this._panel_events.push(Main.panel.connect('enter-event', this._on_enter.bind(this)));
         this._panel_events.push(Main.panel.connect('leave-event', this._on_leave.bind(this)));
+        // this._window_switch_listener_id = global.display.connect('notify::focus-window', this._on_window_switch.bind(this));
+        this._window_switch_listener_id = WinTracker.connect('notify::focus-app', this._on_window_switch.bind(this));
     }
 
 
@@ -103,6 +114,20 @@ export default class MenuBar {
 
 
 
+    /**
+     * @name remove_all_menu_btns
+     * Removes all the menu buttons from the menu bar
+     * 
+     * @returns {void} Nothing
+     */
+    public remove_all_menu_btns(): void {
+        flog('INFO', 'Removing all menu buttons from the menu bar');
+        this._menu_btns.forEach((menu_btn) => menu_btn.destroy());
+        this._menu_btns = [];
+    }
+
+
+
     // 
     // -- Event Listeners
     //
@@ -121,6 +146,36 @@ export default class MenuBar {
 
     }
 
+    private _on_window_switch(): void {
+        flog('INFO', 'Window switch');
+        this.remove_all_menu_btns();
+
+        // -- Get the focused window
+        const focused_window = WinTracker.focus_app;
+
+        // -- If there is no focused window, then return
+        if (!focused_window) return;
+
+        // -- Get the window
+        flog('INFO', 'Focused window: ', focused_window);
+        const win = focused_window.get_windows()[0];
+        let xid = 0;
+
+        // -- Attempt to get the xid, TODO: Find a better way to do this
+        try { xid = parseInt(win.get_description().match(/0x[0-9a-f]+/)[0]); } 
+        catch (e) { flog('ERROR', 'Failed to parse xid'); }
+
+        
+        let win_data = { xid: xid.toString() };
+        for (let p in win) {
+            if (p.startsWith('gtk_') && win[p] != null) win_data[p] = win[p];
+        }
+
+        // -- Ask for the top level menus
+        Object.keys(win_data).forEach((key) => 
+            flog('INFO', 'KV: ', key, ', ', win_data[key]));
+        this._menu_proxy.window_switched(win_data);
+    }
 
 
     //
