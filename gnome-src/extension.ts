@@ -6,7 +6,6 @@ const GETTEXT_DOMAIN = 'fildem-revamped';
 
 import { flog } from './log';
 
-
 class GlobalExtension {
     private static _instance: GlobalExtension;
     public readonly _uuid: string;

@@ -2,6 +2,7 @@
   "compilerOptions": {   
     "lib": ["ESNext"],
     "types": [
+      
     ],
     "target": "ESNext",
     "module": "ES6",

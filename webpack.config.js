@@ -10,7 +10,8 @@ const randomWords = require('random-words');
 module.exports = {
     mode: 'production',
     entry: {
-        extension: './gnome-src/index.ts',
+        extension: './gnome-src/extension.ts',
+        prefs: './gnome-src/prefs.ts',
     },
     module: {
         rules: [
@@ -36,7 +37,7 @@ module.exports = {
     externals: {
         'gi': 'gi',       
         'system': 'system',
-     },
+    },
     resolve: {
         extensions: ['.ts', '.js'],
         alias: {

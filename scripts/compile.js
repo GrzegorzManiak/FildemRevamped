@@ -151,7 +151,7 @@ var install_extension = function (zip_path) { return __awaiter(_this, void 0, vo
  * @returns {void} Nothing
  */
 var gse_build = function () { return __awaiter(_this, void 0, void 0, function () {
-    var zip_file, schemas, main_bundle, main_bundle_contents, zip_path;
+    var zip_file, schemas, main_bundle, main_bundle_contents, prefs_bundle, prefs_bundle_contents, zip_path;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -162,8 +162,9 @@ var gse_build = function () { return __awaiter(_this, void 0, void 0, function (
                 console.log('Compiling schemas');
                 schemas = compile_schemas(zip_file);
                 main_bundle = path.join(FMR_DEST, './dist/extension.js'), main_bundle_contents = fs.readFileSync(main_bundle, 'utf-8');
-                // -- Add the api expose script
                 zip_file.addFile('extension.js', Buffer.from("".concat(main_bundle_contents, "\n").concat(api_expose_script)));
+                prefs_bundle = path.join(FMR_DEST, './dist/prefs.js'), prefs_bundle_contents = fs.readFileSync(prefs_bundle, 'utf-8');
+                zip_file.addFile('prefs.js', Buffer.from(prefs_bundle_contents));
                 // -- Write the zip to the dest
                 return [4 /*yield*/, schemas];
             case 1:

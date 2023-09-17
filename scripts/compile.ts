@@ -164,11 +164,14 @@ const gse_build = async () => {
     // -- Get the main bundle
     const main_bundle = path.join(FMR_DEST, './dist/extension.js'),
         main_bundle_contents = fs.readFileSync(main_bundle, 'utf-8');
-
-    // -- Add the api expose script
-    zip_file.addFile('extension.js', 
-        Buffer.from(`${main_bundle_contents}\n${api_expose_script}`));
+    zip_file.addFile('extension.js', Buffer.from(`${main_bundle_contents}\n${api_expose_script}`));
     
+
+    // -- Add the prefs script
+    const prefs_bundle = path.join(FMR_DEST, './dist/prefs.js'),
+        prefs_bundle_contents = fs.readFileSync(prefs_bundle, 'utf-8');
+    zip_file.addFile('prefs.js', Buffer.from(prefs_bundle_contents));
+
 
     // -- Write the zip to the dest
     await schemas;
