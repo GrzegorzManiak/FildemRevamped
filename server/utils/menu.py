@@ -15,22 +15,21 @@ from fildem.menu_model.menu_model import MenuModel
 class DbusMenu:
 
 	def __init__(self):
-		self.keyb = GlobalKeybinder.create(self.on_keybind_activated)
 		self.app = None
-		self.session = dbus.SessionBus()
-		self.window = WindowManager.new_window()
-		self.tries = 0
-		self.retry_timer_id = 0
-		self.collect_timer = 0
-		self._menu_model = None
+		# self.session = dbus.SessionBus()
+		# self.window = WindowManager.new_window()
+		# self.tries = 0
+		# self.retry_timer_id = 0
+		# self.collect_timer = 0
+		# self._menu_model = None
 
-		self._init_window()
-		self._listen_menu_activated()
-		self._listen_hud_activated()
-		WindowManager.add_listener(self.on_window_switched)
+		# self._init_window()
+		# self._listen_menu_activated()
+		# self._listen_hud_activated()
+		# WindowManager.add_listener(self.on_window_switched)
 
 	def _init_window(self):
-		self._menu_model = MenuModel(self.session, self.window)
+		# self._menu_model = MenuModel(self.session, self.window)
 		self._update()
 
 	def on_window_switched(self, window):

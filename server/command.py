@@ -36,9 +36,6 @@ def main():
 def global_menu():
 	run_hud_menu('global_menu')
 
-def rofi():
-	run_hud_menu('rofi')
-
 
 if __name__ == "__main__":
 	main()

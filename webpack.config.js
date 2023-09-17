@@ -11,8 +11,8 @@ const webpack = require('webpack');
 module.exports = {
     mode: 'production',
     entry: {
-        extension: './client/extension.ts',
-        prefs: './client/prefs.ts',
+        extension: './src/extension.ts',
+        prefs: './src/prefs.ts',
     },
     module: {
         rules: [
