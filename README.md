@@ -2,7 +2,7 @@
 
 ## An Up-to-Date Global Menu for GNOME 44 and Beyond
 
-[![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://buymeacoffee.com/gonza)
+[![Donate? - Buy me a beer 🍺](https://img.shields.io/badge/Donate%3F-Buy_me_a_beer_🍺-2ea44f)](https://www.buymeacoffee.com/GrzegorzManiak)
 
 ![FildemRevamped](https://github.com/GrzegorzManiak/FildemRevamped/assets/83783716/33b4aeba-4f46-4e2c-bbc0-8c022a13238f)
 
