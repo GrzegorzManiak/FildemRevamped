@@ -1,0 +1,73 @@
+<node>
+  	<interface name="com.gonzaarcr.appmenu" path="/com/gonzaarcr/appmenu">
+		<method name="EchoSignal">
+			<arg type="s" direction="in" name="menu"/>
+			<arg type="u" direction="in" name="x"/>
+		</method>
+
+		<method name="WindowSwitched">
+			<arg name="win_data" type="a{ss}" direction="in"/>
+		</method>
+
+		<signal name="WindowSwitchedSignal">
+			<arg name="win_data" type="a{ss}"/>
+		</signal>
+
+		<signal name="MenuActivated">
+			<arg name="menu" type="s"/>
+			<arg name="x" type="u"/>
+		</signal>
+
+		<method name="EchoMenuOnOff">
+			<arg name="on" type="b" direction="in"/>
+		</method>
+
+		<signal name="MenuOnOff">
+			<arg name="on" type="b"/>
+		</signal>
+
+		<method name="SendTopLevelMenus">
+			<arg name="top_level_menus" type="as" direction="in"/>
+		</method>
+
+		<signal name="SendTopLevelMenusSignal">
+			<arg name="top_level_menus" type="as"/>
+		</signal>
+
+		<method name="SendTopLevelOptions">
+			<arg name="top_level_options" type="as" direction="in"/>
+		</method>
+
+		<signal name="SendTopLevelOptionsSignal">
+			<arg name="top_level_options" type="as"/>
+		</signal>
+
+		<method name="RequestAction">
+			<arg name="action" type="ab" direction="out"/>
+		</method>
+
+		<signal name="RequestActionSignal">
+			<arg name="action" type="ab"/>
+		</signal>
+
+		<method name="RequestWindowActions"/>
+		<signal name="RequestWindowActionsSignal"/>
+
+		<method name="ListWindowActions">
+			<arg name="actions" type="as" direction="in"/>
+		</method>
+
+		<signal name="ListWindowActionsSignal">
+			<arg name="actions" type="as"/>
+		</signal>
+
+		<method name="ActivateWindowAction">
+			<arg name="action" type="s" direction="in"/>
+		</method>
+
+		<signal name="ActivateWindowActionSignal">
+			<arg name="action" type="s"/>
+		</signal>
+
+	</interface>
+</node>

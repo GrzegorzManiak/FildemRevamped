@@ -37,6 +37,7 @@ const FMR_ROOT = path.join(process.cwd(), 'gnome-src');
 const copy_files = [
     "metadata.json",
     "stylesheet.css",
+    "iface.xml",
 ];
 
 

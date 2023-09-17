@@ -5,11 +5,14 @@ const _ = ExtensionUtils.gettext;
 const GETTEXT_DOMAIN = 'fildem-revamped';
 
 import { flog } from './log';
+import MenuProxy from './proxy';
 
 class GlobalExtension {
     private static _instance: GlobalExtension;
     public readonly _uuid: string;
     public readonly _gettext_domain: string = GETTEXT_DOMAIN;
+
+    private _menu_proxy: MenuProxy;
 
 
 
@@ -20,8 +23,11 @@ class GlobalExtension {
      * @param {string} uuid - The uuid of the extension
      */
     private constructor(uuid: string) {
+        flog('INFO', 'GlobalExtension constructor');
+        
         this._uuid = uuid;
         ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
+        this._menu_proxy = MenuProxy.get_instance(uuid);
 
         // -- Check if Me is defined
         this._check_me();

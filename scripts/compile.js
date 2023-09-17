@@ -52,6 +52,7 @@ var FMR_ROOT = path.join(process.cwd(), 'gnome-src');
 var copy_files = [
     "metadata.json",
     "stylesheet.css",
+    "iface.xml",
 ];
 /**
  * @name build_zip

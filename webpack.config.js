@@ -3,9 +3,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HappyPack = require('happypack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const BundleTracker = require('webpack-bundle-tracker');
-const happyThreadPool = HappyPack.ThreadPool({ size: 6 });
+const happyThreadPool = HappyPack.ThreadPool({ size: 1 });
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const randomWords = require('random-words');
+const webpack = require('webpack');
 
 module.exports = {
     mode: 'production',
@@ -61,6 +62,11 @@ module.exports = {
         ],
     },
     plugins: [
+
+        // new webpack.IgnorePlugin({
+        //     resourceRegExp: /^gi:/,
+        // }),
+
         new HappyPack({
             id: 'babel',
             threadPool: happyThreadPool,
