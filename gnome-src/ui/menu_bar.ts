@@ -1,11 +1,13 @@
 import { flog } from '../log';
 import { ui } from '@girs/gnome-shell';
+import { Shell as ShellTypes } from '@girs/shell-12';
 import MenuItem from './menu_btn';
 import MenuProxy from '../proxy';
 
 const Main = ui.main;
 const WinTracker = imports.gi.Shell.WindowTracker.get_default();
 const Shell = imports.gi.Shell;
+const workspace = ui.workspace;
 
 export default class MenuBar {
     private static _instance: MenuBar;
@@ -20,7 +22,8 @@ export default class MenuBar {
     private _window_switch_listener_id: number = 0;
 
     private _menu_proxy: MenuProxy;
-    
+    private _last_window: ShellTypes.App | null = null;
+
     private constructor(uuid: string) {
         flog('INFO', 'MenuBar constructor');
         this._uuid = uuid;
@@ -118,7 +121,8 @@ export default class MenuBar {
         left_margin: number = 0
     ): MenuItem {
         flog('INFO', 'Adding menu button to the menu bar');
-        const new_button = new MenuItem(label, this);
+        const new_button = new MenuItem(label, this, () => 
+            this._menu_proxy.echo_signal(label));
 
         // -- Add the button to the menu bar
         this._menu_btns.push(new_button);
@@ -153,6 +157,27 @@ export default class MenuBar {
 
 
 
+    /**
+     * @name set_button_state
+     * Sets the visibility of the menu button
+     * 
+     * @param {boolean} state - The state of the menu button
+     *
+     * @returns {void} Nothing
+     */
+    public set_button_state(
+        state: boolean
+    ): void {
+        flog('INFO', 'Setting the state of the menu button');
+        this._menu_btns.forEach((menu_btn) => {
+            menu_btn.set_easing_delay(state ? 0 : 1000);
+            menu_btn.set_easing_duration(state ? 1000 : 0);
+            menu_btn.set_opacity(state ? 255 : 0);
+        });
+    }
+
+
+
     // 
     // -- Event Listeners
     //
@@ -172,11 +197,10 @@ export default class MenuBar {
     }
 
     private _on_window_switch(): void {
-        flog('INFO', 'Window switch');
-        this.remove_all_menu_btns();
-
-        // -- Get the focused window
+        // -- Check if the window has changed
         const focused_window = WinTracker.focus_app;
+        if (this._last_window == focused_window) return;
+        this._last_window = focused_window;
 
         // -- If there is no focused window, then return
         if (!focused_window) return;

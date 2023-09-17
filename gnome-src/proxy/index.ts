@@ -205,6 +205,10 @@ export default class MenuProxy {
      * @name window_switched
      * Called by us when we detect that the window has switched
      * 
+     * <method name="WindowSwitched">
+	 *  <arg name="win_data" type="a{ss}" direction="in"/>
+	 * </method>
+     *
      * @param {Record<string, unknown>} win_data - The data of the window
      * 
      * @returns {void} Nothing
@@ -219,11 +223,40 @@ export default class MenuProxy {
             Gio.DBusCallFlags.NONE,
             -1,
             null,
-            async (proxy: GioTypes.DBusProxy, res) => {
-                flog('INFO', 'Window switched callback: ', proxy, await res);
-            }
+            null
         );
     }
+
+
+
+    /**
+     * @name echo_signal
+     * Sends a signal to the python backend, this function is called
+     * when a menu item is clicked
+     * 
+     * <method name="EchoSignal">
+	 *	<arg type="s" direction="in" name="menu"/>
+	 *  <arg type="u" direction="in" name="x"/>
+	 * </method>
+     * 
+     * @param {string} label - The label of the menu item
+     * 
+     * @returns {void} Nothing
+     */
+    public echo_signal(
+        label: string
+    ): void {
+        flog('INFO', 'Echoing signal');
+        this._dbus_proxy.call(
+            'EchoSignal',
+            new GLib.Variant('(su)', [label, 0]),
+            Gio.DBusCallFlags.NONE,
+            -1,
+            null,
+            null
+        );
+    }
+                
 
 
     private async _on_send_top_level_menus(

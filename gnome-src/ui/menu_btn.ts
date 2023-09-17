@@ -12,7 +12,7 @@ class MenuItem extends ui.panelMenu.Button {
     private _box_layout: StTypes.BoxLayout;
     private _label_widget: StTypes.Label;
 
-
+    private _on_click: () => void = () => { };
 
     /**
      * @constructor
@@ -22,7 +22,8 @@ class MenuItem extends ui.panelMenu.Button {
      */
     public constructor(
         label: string,
-        menu: MenuBar
+        menu: MenuBar,
+        on_click: () => void
     ) {
         super(0.0, label);
 
@@ -30,6 +31,7 @@ class MenuItem extends ui.panelMenu.Button {
         this._menu = menu;
 
         this._construct();
+        this._on_click = on_click;
     }
 
 
@@ -80,6 +82,7 @@ class MenuItem extends ui.panelMenu.Button {
         event: Clutter.Event
     ): boolean {
         flog('INFO', `Button '${this._label}' was clicked`);
+        this._on_click();
         return true;
     }
 
