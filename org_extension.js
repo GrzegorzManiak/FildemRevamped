@@ -51,6 +51,8 @@ const CircularObjectValue = () => {
 }
 
 
+
+
 const WindowActions = class WindowActions {
 	constructor() {
 		this._win = global.display.get_focus_window();
@@ -225,6 +227,8 @@ const WindowActions = class WindowActions {
 	}
 }
 
+
+
 /**
  * A single Button like File, Edit, etc.
  */
@@ -272,6 +276,8 @@ class MenuButton extends PanelMenu.Button {
 	}
 });
 
+
+
 const Cache = class Cache {
 	constructor() {
 		this.N = 10;
@@ -307,6 +313,8 @@ const Cache = class Cache {
 		return g;
 	}
 }
+
+
 
 /**
  * This is a manager not a container

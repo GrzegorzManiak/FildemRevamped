@@ -12,6 +12,7 @@
   },
   "include": [
       "gnome-src/*.ts",
+      "gnome-src/**/*.ts",
       "@girs/glib-2.0",
       "@girs/gtk-4.0",
       "@girs/adw-1",
