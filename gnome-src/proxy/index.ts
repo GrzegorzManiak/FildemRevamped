@@ -27,7 +27,7 @@ export default class MenuProxy {
     private _dbus_proxy: GioTypes.DBusProxy;
     private _handler_ids: number[] = [];
 
-    private _send_top_level_menus_listeners: Array<() => void> = [];
+    private _send_top_level_menus_listeners: Array<(opts: Array<string>) => void> = [];
     private _menu_on_off_listeners: Array<(state: boolean) => void> = [];
 
     private constructor(
@@ -157,12 +157,12 @@ export default class MenuProxy {
      * @name add_send_top_level_menus_listener
      * Adds a listener for when the top level menus are sent
      * 
-     * @param {() => void} listener - The listener to add
+     * @param {(opts: Array<string>) => void} listener - The listener to add
      * 
      * @returns {() => void} A function to remove the listener
      */
     public add_send_top_level_menus_listener(
-        listener: () => void
+        listener: (opts: Array<string>) => void
     ): () => void {
         flog('INFO', 'Adding send top level menus listener');
         this._send_top_level_menus_listeners.push(listener);
@@ -233,7 +233,22 @@ export default class MenuProxy {
         invocation: GioTypes.DBusMethodInvocation
     ): Promise<void> {
         flog('INFO', `send_top_level_menus: ${sender_name}, ${args}, ${invocation}`);
-        this._send_top_level_menus_listeners.forEach(listener => listener());
+    
+        // -- Check if the args array is valid
+        if (
+            args.length !== 1 ||                            // -- Check if there's only one argument
+            !Array.isArray(args[0]) ||                      // -- Check if the argument is an array
+            args[0].some(arg => typeof arg !== 'string')    // -- Check if all elements of the array are strings
+        ) {
+            flog('ERROR', 'The args are not correct');
+            return;
+        }
+    
+        // -- Extract the array of strings from the args
+        const menu_items: string[] = args[0] as string[];
+    
+        // -- Call the listeners with the array of strings as an argument
+        this._send_top_level_menus_listeners.forEach(listener => listener(menu_items));
     }
 
     private async _on_send_top_level_options_signal(

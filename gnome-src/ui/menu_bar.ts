@@ -60,8 +60,33 @@ export default class MenuBar {
         flog('INFO', 'Adding event listeners to the menu bar');
         this._panel_events.push(Main.panel.connect('enter-event', this._on_enter.bind(this)));
         this._panel_events.push(Main.panel.connect('leave-event', this._on_leave.bind(this)));
-        // this._window_switch_listener_id = global.display.connect('notify::focus-window', this._on_window_switch.bind(this));
         this._window_switch_listener_id = WinTracker.connect('notify::focus-app', this._on_window_switch.bind(this));
+        this._menu_proxy.add_send_top_level_menus_listener(this._process_top_level_menus.bind(this));
+    }
+
+
+
+    /**
+     * @name _process_top_level_menus
+     * Processes the top level menus
+     * 
+     * @param {Array<string>} opts - The top level menus
+     * 
+     * @returns {void} Nothing
+     */
+    private _process_top_level_menus(
+        opts: Array<string>
+    ): void {
+        flog('INFO', 'Processing top level menus');
+        this.remove_all_menu_btns();
+
+        // -- Loop through the top level menus and add them to the menu bar
+        opts.forEach((opt) => {
+            // -- If the first character is a _, then remove it
+            if (opt.startsWith('_')) opt = opt.slice(1);
+            flog('INFO', 'Adding top level menu: ', opt);
+            this.add_menu_btn(opt);
+        });
     }
 
 
@@ -168,6 +193,7 @@ export default class MenuBar {
         
         let win_data = { xid: xid.toString() };
         for (let p in win) {
+            // -- Pass only gtk related properties
             if (p.startsWith('gtk_') && win[p] != null) win_data[p] = win[p];
         }
 
