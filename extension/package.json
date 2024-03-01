@@ -14,6 +14,7 @@
     "debug-shell-filterd": "dbus-run-session -- gnome-shell --nested --wayland | grep '^\\[Gggm\\]'\n",
 
     "monitor-dbus": "dbus-monitor \"interface='dev.grzegorzmaniak.gggm',path='/'\"",
+    "monitor-vsc": "dbus-monitor \"interface='com.canonical.dbusmenu',path='/com/canonical/menu/800003'\"",
     "monitor-logs": "journalctl /usr/bin/gnome-shell -f -o cat"
   },
   "dependencies": {
