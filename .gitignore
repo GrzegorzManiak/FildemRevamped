@@ -1,36 +1,5 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# IntelliJ
-.idea/
-
-# Sublime project stuff
-*.sublime-project
-*.sublime-workspace
-
 node_modules/
-
-
-FildemRevamped@grzegorz.ie/
-FildemRevamped@grzegorz.ie.zip
+package-lock.json
+venv/
+bun.lockb

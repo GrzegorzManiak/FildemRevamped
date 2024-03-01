@@ -1,0 +1,1 @@
+import '@girs/gnome-shell/extensions/global';
