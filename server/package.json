@@ -1,7 +1,7 @@
 {
-  "name": "sharez",
+  "name": "gggm",
   "version": "0.0.1",
-  "description": "ShareZ is a GNOME Shell extension that communicates with the ShareZ application to Window information",
+  "description": "Gregs Global Gnome Menu",
   "author": "GrzegorzManiak",
   "scripts": {
     "build": "bun run esbuild.config.js",

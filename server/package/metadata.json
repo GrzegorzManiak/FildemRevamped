@@ -1,10 +1,10 @@
 {
-  "name": "ShareZ Companion",
-  "description": "ShareZ is a GNOME Shell extension that communicates with the ShareZ application to Window information",
+  "name": "Gregs Global Gnome Menu",
+  "description": "Gregs Global Gnome Menu",
   "shell-version": [
     "45"
   ],
-  "url": "https://github.com/GrzegorzManiak/sharez",
+  "url": "https://github.com/GrzegorzManiak/GGGM",
   "uuid": "ShareZ@grzegorz",
   "version": 1
 }

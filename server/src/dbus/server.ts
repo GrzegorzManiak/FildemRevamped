@@ -2,14 +2,12 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Logger from '../logger/log';
 import {get_active_display, get_all_displays, get_focused_window, get_open_windows} from '../core/core';
-import Window from '../core/window';
 import Type from '../logger/type';
-import Display from '../core/display';
 
 export default class DBusServer {
 
-    public static readonly INTERFACE: string = 'dev.grzegorzmaniak.sharez.gnome';
-    public static readonly OBJECT_PATH: string = '/dev/grzegorzmaniak/sharez/gnome';
+    public static readonly INTERFACE: string = 'dev.grzegorzmaniak.gggm';
+    public static readonly OBJECT_PATH: string = '/dev/grzegorzmaniak/gggm';
     public static readonly XML_INTERFACE: string = 'iface.xml';
 
     private static _instance: DBusServer;
@@ -188,30 +186,12 @@ export default class DBusServer {
 
 
     private _methods = {
-        get_open_windows: (): Array<string> => {
-            const windows: Array<Window> = get_open_windows();
-            return windows.map((window) => JSON.stringify(window));
-        },
 
-        get_focused_window: (): string => {
-            const focused_window = get_focused_window();
-            return focused_window ? JSON.stringify(focused_window) : '{}';
-        },
-
-        get_all_displays: (): Array<string> => {
-            const displays: Array<Display> = get_all_displays();
-            return displays.map((display) => JSON.stringify(display));
-        },
-
-        get_active_display: (): string => {
-            const active_display = get_active_display();
-            return active_display ? JSON.stringify(active_display) : '{}';
-        },
 
         emmit_service_started: (): void => {
             this._dbus.emit_signal(
                 'service_running',
-                new GLib.Variant('(s)', ['SHAREZ Service running'])
+                new GLib.Variant('(s)', ['GGGM Service running'])
             );
         },
     };
