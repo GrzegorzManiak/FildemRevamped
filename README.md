@@ -1,4 +1,4 @@
-# FildemRevamped
+# GggM (Gregs Global Gnome Menu)
 
 ## An Up-to-Date Global Menu for GNOME 44 and Beyond
 
@@ -12,10 +12,5 @@ FildemRevamped comes into play because [Gonzaarcr](https://github.com/gonzaarcr)
 
 ## What's Changed?
 
-So far, I've rewritten all the GJS from the ground up in TypeScript. The original project was just one file. I've also made bug fixes and general improvements.
+Everything. 
 
-The Python script running in the background will be rewritten soon, but for now, only minor tweaks have been and will be made.
-
-## Installation
-
-Currently, there is no installation guide, as this is one aspect I'm completely modifying. Users will be able to download the add-on from GNOME extensions without needing to download any other scripts, as all that will be done through the configuration menu.

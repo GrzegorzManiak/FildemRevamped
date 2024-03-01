@@ -3,3 +3,4 @@ node_modules/
 package-lock.json
 venv/
 bun.lockb
+__pycache__/

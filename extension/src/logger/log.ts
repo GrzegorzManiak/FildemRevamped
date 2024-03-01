@@ -7,7 +7,7 @@
 
 import Type from './type';
 import Shell from 'gi://Shell';
-import DBus from '../dbus/server';
+import DBus from '../dbus/registrar';
 const global = Shell.Global.get();
 
 

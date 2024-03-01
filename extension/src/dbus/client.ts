@@ -1,15 +1,12 @@
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Logger from '../logger/log';
-import {get_active_display, get_all_displays, get_focused_window, get_open_windows} from '../core/core';
-import Window from '../core/window';
-import Type from '../logger/type';
-import Display from '../core/display';
+
 
 export default class DBusClient {
 
-    public static readonly INTERFACE: string = 'dev.grzegorzmaniak.gggm.server';
-    public static readonly OBJECT_PATH: string = '/dev/grzegorzmaniak/Gggm/server';
+    public static readonly INTERFACE: string = 'com.canonical.AppMenu.Registrar';
+    public static readonly OBJECT_PATH: string = '/com/canonical/AppMenu/Registrar';
 
     private static _instance: DBusClient;
     private readonly _DBusClient: Gio.DBusExportedObject;
@@ -34,7 +31,6 @@ export default class DBusClient {
 
         this._connected = this._connect();
         this._start_watching();
-        this.get_directories();
     }
 
 
@@ -58,7 +54,7 @@ export default class DBusClient {
     ) {
         Logger.info('Name appeared: ' + name);
         this._connected = this._connect();
-        this.get_directories();
+        // this.get_menu_for_window(0x800003);
     }
 
 
@@ -68,7 +64,7 @@ export default class DBusClient {
         name: string
     ) {
         Logger.info('Name vanished: ' + name);
-    }
+    };
 
 
 
@@ -102,7 +98,9 @@ export default class DBusClient {
             Logger.error('Error connecting to the Server: ' + error.message);
             return false;
         }
-    }
+    };
+
+    
 
     /**
      * @name getInstance
@@ -113,61 +111,38 @@ export default class DBusClient {
     public static getInstance = (): DBusClient => {
         if (!DBusClient._instance) new DBusClient();
         return DBusClient._instance;
-    }
+    };
 
 
 
-    /**
-     * @name get_directories
-     * Gets the directories from the server on where
-     * we are meant to store the files
-     *
-     * @returns {{
-     *     screenshots: string,
-     *     recordings: string
-     *     temp: string
-     * }}
-     */
-    public get_directories = (): {
-        screenshots: string,
-        recordings: string,
-        temp: string
+    public get_menu_for_window = (window_id: number): { 
+        service: string, 
+        menuObjectPath: string 
     } => {
-        Logger.info('Getting directories from the server');
+        Logger.info('Getting menu for window: ' + window_id);
 
         if (!this._connected) {
             Logger.error('Not connected to the server');
-            return {
-                screenshots: '',
-                recordings: '',
-                temp: ''
-            };
+            return { service: '', menuObjectPath: '' };
         }
 
         try {
-            Logger.info('Getting directories from the server');
-            let directories = this._proxy.call_sync(
-                'get_directories',
-                null,
+            Logger.info('Getting menu for window from the server');
+            const result = this._proxy.call_sync(
+                'GetMenuForWindow',
+                new GLib.Variant('(u)', [window_id]),
                 Gio.DBusCallFlags.NONE,
                 -1,
                 null
             );
 
-            return {
-                screenshots: directories[0],
-                recordings: directories[1],
-                temp: directories[2]
-            };
+            const [service, menuObjectPath] = result.deep_unpack();
+            return { service, menuObjectPath };
         }
 
         catch (error) {
-            Logger.error('Error getting directories from the server: ' + error.message);
-            return {
-                screenshots: '',
-                recordings: '',
-                temp: ''
-            };
+            Logger.error('Error getting menu for window: ' + error.message);
+            return { service: '', menuObjectPath: '' };
         }
     };
 }
