@@ -6,7 +6,7 @@
   "scripts": {
     "build": "bun run esbuild.config.js",
     "build-watch": "nodemon --watch . --exec 'npm run build'",
-    "install-ext": "gnome-extensions install -f ../../dist/gnome/Gggm@grzegorz.ie.zip",
+    "install-ext": "gnome-extensions install -f ../dist/extension/gggm@grzegorz.ie.zip",
 
     "automate": "nodemon",
 

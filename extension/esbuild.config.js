@@ -6,8 +6,8 @@ const { exec } = require('child_process');
 const uuid = 'FildemRevamped@grzegorz.ie';
 
 
-const FMR_DEST = 'Gggm@grzegorz.ie';
-const FMR_ROOT = path.join(process.cwd(), '../../dist/gnome');
+const FMR_DEST = 'gggm@grzegorz.ie';
+const FMR_ROOT = path.join(process.cwd(), '../dist/extension');
 const FMR_PACKAGE = path.join(process.cwd(), `./package/`);
 
 console.log('FMR_ROOT', FMR_ROOT);
@@ -36,7 +36,7 @@ require('esbuild').build({
         '@girs/*'
     ],
 
-    outdir: '../../dist/gnome',
+    outdir: FMR_ROOT,
 
     // -- GNOME Specifc options
     platform: 'node',
