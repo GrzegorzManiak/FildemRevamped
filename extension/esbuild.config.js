@@ -2,9 +2,6 @@
 const path = require('path');
 const fs = require('fs');
 const Zip = require('adm-zip');
-const { exec } = require('child_process');
-const uuid = 'FildemRevamped@grzegorz.ie';
-
 
 const FMR_DEST = 'gggm@grzegorz.ie';
 const FMR_ROOT = path.join(process.cwd(), '../dist/extension');
@@ -12,8 +9,6 @@ const FMR_PACKAGE = path.join(process.cwd(), `./package/`);
 
 console.log('FMR_ROOT', FMR_ROOT);
 console.log('FMR_PACKAGE', FMR_PACKAGE);
-
-
 console.log('Building extension');
 
 require('esbuild').build({

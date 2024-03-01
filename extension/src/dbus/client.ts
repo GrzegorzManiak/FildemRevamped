@@ -8,7 +8,7 @@ import Display from '../core/display';
 
 export default class DBusClient {
 
-    public static readonly INTERFACE: string = 'dev.grzegorzmaniak.Gggm.server';
+    public static readonly INTERFACE: string = 'dev.grzegorzmaniak.gggm.server';
     public static readonly OBJECT_PATH: string = '/dev/grzegorzmaniak/Gggm/server';
 
     private static _instance: DBusClient;

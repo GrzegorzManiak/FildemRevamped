@@ -1,45 +1,5 @@
 <node>
-    <interface name='dev.grzegorzmaniak.Gggm'>
-
-        <!--
-            METHOD: get_open_windows
-            Returns a list of open windows
-
-            Returns: array of strings
-        -->
-        <method name='get_open_windows'>
-            <arg type='as' name='windows' direction='out'/>
-        </method>
-
-        <!--
-            METHOD: get_focused_window
-            Returns the focused window
-
-            Returns: string
-        -->
-        <method name='get_focused_window'>
-            <arg type='s' name='window' direction='out'/>
-        </method>
-
-        <!--
-            METHOD: get_all_displays
-            Returns a list of all displays
-
-            Returns: array of strings
-        -->
-        <method name='get_all_displays'>
-            <arg type='as' name='displays' direction='out'/>
-        </method>
-
-        <!--
-            METHOD: get_active_display
-            Returns the active display
-
-            Returns: string
-        -->
-        <method name='get_active_display'>
-            <arg type='s' name='display' direction='out'/>
-        </method>
+    <interface name='dev.grzegorzmaniak.gggm'>
 
         <!--
             SIGNAL: service_started
