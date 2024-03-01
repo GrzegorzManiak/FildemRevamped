@@ -10,7 +10,7 @@
 
     "automate": "nodemon",
 
-    "debug-shell": "dbus-run-session --gnome-shell --nested --wayland",
+    "debug-shell": "dbus-run-session -- gnome-shell --nested --wayland",
     "debug-shell-filterd": "dbus-run-session -- gnome-shell --nested --wayland | grep '^\\[Gggm\\]'\n",
 
     "monitor-dbus": "dbus-monitor \"interface='dev.grzegorzmaniak.gggm',path='/'\"",

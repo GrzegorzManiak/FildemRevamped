@@ -13,7 +13,7 @@ export default class Gggm extends Extension {
         if (!Gggm._dbus_server) Gggm._dbus_server = DBusServer.getInstance();
         Gggm._dbus_server.acquire_bus();
 
-        if (!Gggm._dbus_client) Gggm._dbus_client = DBusClient.getInstance();
+        // if (!Gggm._dbus_client) Gggm._dbus_client = DBusClient.getInstance();
         // Gggm._dbus_client.start_watching();
     }
 
