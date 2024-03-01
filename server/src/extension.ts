@@ -3,22 +3,22 @@ import Logger from "./logger/log";
 import DBusServer from "./dbus/server";
 import DBusClient from "./dbus/client";
 
-export default class ShareZ extends Extension {
+export default class Gggm extends Extension {
     private static _dbus_server: DBusServer;
     private static _dbus_client: DBusClient;
 
     public enable() {
-        Logger.info('SHAREZ Enabling extension');
+        Logger.info('Gggm Enabling extension');
 
-        if (!ShareZ._dbus_server) ShareZ._dbus_server = DBusServer.getInstance();
-        ShareZ._dbus_server.acquire_bus();
+        if (!Gggm._dbus_server) Gggm._dbus_server = DBusServer.getInstance();
+        Gggm._dbus_server.acquire_bus();
 
-        if (!ShareZ._dbus_client) ShareZ._dbus_client = DBusClient.getInstance();
-        // ShareZ._dbus_client.start_watching();
+        if (!Gggm._dbus_client) Gggm._dbus_client = DBusClient.getInstance();
+        // Gggm._dbus_client.start_watching();
     }
 
     public disable() {
-        Logger.info('SHAREZ Disabling extension');
-        if (ShareZ._dbus_server) ShareZ._dbus_server.release_bus();
+        Logger.info('Gggm Disabling extension');
+        if (Gggm._dbus_server) Gggm._dbus_server.release_bus();
     }
 }

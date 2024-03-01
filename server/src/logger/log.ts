@@ -48,7 +48,7 @@ export default class Logger {
 
         // -- Create the message, so the header, bolded, then the args
         // @ts-ignore
-        console.log(`[SHAREZ] ${header}`, ...args);
+        console.log(`[Gggm] ${header}`, ...args);
         DBus.getInstance().dbus_log(type, header, args.join(' '));
     };
 

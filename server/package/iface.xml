@@ -1,5 +1,5 @@
 <node>
-    <interface name='dev.grzegorzmaniak.sharez'>
+    <interface name='dev.grzegorzmaniak.Gggm'>
 
         <!--
             METHOD: get_open_windows

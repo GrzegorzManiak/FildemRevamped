@@ -6,7 +6,7 @@ const { exec } = require('child_process');
 const uuid = 'FildemRevamped@grzegorz.ie';
 
 
-const FMR_DEST = 'sharez@grzegorz.ie';
+const FMR_DEST = 'Gggm@grzegorz.ie';
 const FMR_ROOT = path.join(process.cwd(), '../../dist/gnome');
 const FMR_PACKAGE = path.join(process.cwd(), `./package/`);
 

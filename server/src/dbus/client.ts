@@ -8,8 +8,8 @@ import Display from '../core/display';
 
 export default class DBusClient {
 
-    public static readonly INTERFACE: string = 'dev.grzegorzmaniak.sharez.server';
-    public static readonly OBJECT_PATH: string = '/dev/grzegorzmaniak/sharez/server';
+    public static readonly INTERFACE: string = 'dev.grzegorzmaniak.Gggm.server';
+    public static readonly OBJECT_PATH: string = '/dev/grzegorzmaniak/Gggm/server';
 
     private static _instance: DBusClient;
     private readonly _DBusClient: Gio.DBusExportedObject;
@@ -23,7 +23,7 @@ export default class DBusClient {
      * Creates a new instance of the DBusClient object
      *
      * This class is responsible for interacting with the
-     * sharez server via the DBus interface. It will be used
+     * Gggm server via the DBus interface. It will be used
      * to get configs etc.
      *
      * @private
