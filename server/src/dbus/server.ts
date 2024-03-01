@@ -1,7 +1,6 @@
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Logger from '../logger/log';
-import {get_active_display, get_all_displays, get_focused_window, get_open_windows} from '../core/core';
 import Type from '../logger/type';
 
 export default class DBusServer {
@@ -14,8 +13,8 @@ export default class DBusServer {
     private readonly _dbus: Gio.DBusExportedObject;
     private readonly _iface: string;
 
-    private _bus_id: number;
-    private _service_id: number;
+    private _bus_id: number = 0;
+    private _service_id: number = 0;
 
     /**
      * @name constructor

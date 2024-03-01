@@ -1,7 +1,7 @@
-import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
-import Logger from "./logger/log";
-import DBusServer from "./dbus/server";
-import DBusClient from "./dbus/client";
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
+import Logger from './logger/log';
+import DBusServer from './dbus/server';
+import DBusClient from './dbus/client';
 
 export default class Gggm extends Extension {
     private static _dbus_server: DBusServer;
