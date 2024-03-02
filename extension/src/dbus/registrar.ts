@@ -2,6 +2,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Logger from '../logger/log';
 import Type from '../logger/type';
+import DBusClient from './client';
 
 export default class DBusRegistrar {
 
@@ -16,7 +17,11 @@ export default class DBusRegistrar {
     private _bus_id: number = 0;
     private _service_id: number = 0;
 
-    private _window_map: Map<number, string> = new Map<number, string>();
+    private _window_map: Map<number, {
+        window_id: number,
+        menu_object_path: string,
+        dbus: DBusClient
+    }> = new Map();
 
     /**
      * @name constructor
@@ -220,7 +225,14 @@ export default class DBusRegistrar {
             Logger.info('Registering window: ' + window_id);
             Logger.info('Menu Object Path: ' + menu_object_path);
             if (this._window_map.has(window_id)) Logger.warn('Window already registered');
-            this._window_map.set(window_id, menu_object_path);
+            this._window_map.set(window_id, {
+                window_id: window_id,
+                menu_object_path: menu_object_path,
+                dbus: new DBusClient(
+                    'com.canonical.dbusmenu',
+                    menu_object_path
+                )
+            });
         },
 
         
@@ -241,7 +253,12 @@ export default class DBusRegistrar {
             window_id: number
         ): void => {
             Logger.info('Unregistering window: ' + window_id);
-            if (this._window_map.has(window_id)) this._window_map.delete(window_id);
+            if (!this._window_map.has(window_id)) 
+                return Logger.warn('Window not registered');
+
+            const window = this._window_map.get(window_id);
+            if (window) window.dbus.disconnect();
+            this._window_map.delete(window_id);
         },
 
 

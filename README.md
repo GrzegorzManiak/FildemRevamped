@@ -14,3 +14,21 @@ FildemRevamped comes into play because [Gonzaarcr](https://github.com/gonzaarcr)
 
 Everything. 
 
+## Development
+
+This is going to be quite unstructured for now as I peice together the code and try to make it work. 
+
+- **X11**: Test with X11 Not Wayland, to reload the extension on Wayland you have to log out
+    and log in again, closing all your apps.
+
+    Where as with X11 you can just press `Alt + F2` and type `r` and press `Enter` to reload the shell.
+    You can find out how to enable X11 [here](https://unix.stackexchange.com/a/336227)
+
+    X11: To reload the extension, you can press `Alt + F2` and type `r` and press `Enter` to reload the shell.
+    Wayland: You have to log out and log in again, closing all your apps, or run `bun run debug-shell` and then
+    but you are limited on what you can do in the debug shell (Useless for this application).
+
+    Note: this extension should work regardless of the display server, but it's just easier to test with X11.
+    X11 Is also laggier, your monitors refresh rate will be lower, its buggy, your wallpaper will look like
+    dog and a million other things, so make sure to switch back to Wayland after testing.
+        

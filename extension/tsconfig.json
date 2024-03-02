@@ -4,17 +4,20 @@
             "ESNext"
         ],
         "types": [
-            "node"
+            "node",
+            "@girs/gio-2.0",
+            "@girs/glib-2.0",
+            "@girs/shell-13"
         ],
         "target": "ES2022",
         "module": "ESNext",
         "moduleResolution": "node",
         "rootDir": "./src",
-        "outDir": "../../dist/gnome",
+        "outDir": "../dist/extension",
         "forceConsistentCasingInFileNames": true,
         "esModuleInterop": true,
         "removeComments": true,
-        "strict": true,
+        "strict": false,
         "skipLibCheck": true
     }
 }

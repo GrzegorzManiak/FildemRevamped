@@ -5,16 +5,12 @@ import DBusClient from './dbus/client';
 
 export default class Gggm extends Extension {
     private static _dbus_registrar: DBusRegistrar;
-    private static _dbus_client: DBusClient;
 
     public enable() {
         Logger.info('Gggm Enabling extension');
 
         if (!Gggm._dbus_registrar) Gggm._dbus_registrar = DBusRegistrar.getInstance();
         Gggm._dbus_registrar.acquire_bus();
-
-        if (!Gggm._dbus_client) Gggm._dbus_client = DBusClient.getInstance();
-        // Gggm._dbus_client.start_watching();
     }
 
     public disable() {
