@@ -13,8 +13,9 @@ export default class Gggm extends Extension {
         Gggm._dbus_registrar.acquire_bus();
 
         Window.add_window_changed_listener((window: Window | null) => {
-            if (window) Logger.info('Window changed', window); 
-            else Logger.info('Window changed', 'null');
+            if (!window) return;
+            Logger.info('Window changed', window.title);
+
         });
 
         Window.start();
