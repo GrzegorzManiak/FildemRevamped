@@ -64,11 +64,11 @@ export default class Window {
      * @returns {void}
      */
     public static start = (): void => {
+        Window._listening = true;
         if (Window._started) return Logger.warn('Window listener is already started');
         Logger.info('Starting window listener');
         Window._start_window_changed_listener();
         Window._started = true;
-        Window._listening = true;
     };
 
 

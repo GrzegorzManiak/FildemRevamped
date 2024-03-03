@@ -11,8 +11,18 @@ export default class DBusClient {
     private _proxy: Gio.DBusProxy | null = null;
     private _connection: Gio.DBusConnection | null = null;
     private _connected: boolean = false;
-
+    
     private _listening: boolean = false;
+    private _on_load_callback: ((
+        client: DBusClient,
+        name: string,
+        args: string
+    ) => void) | null = null;
+
+
+    private _version: number | null = null;
+    private _status: string | null = null;
+
 
     /**
      * @name constructor
@@ -26,13 +36,20 @@ export default class DBusClient {
      */
     public constructor(
         dbus_interface: string,
-        object_path: string
+        object_path: string,
+        callback: ((
+            client: DBusClient,
+            name: string,
+            args: string
+        ) => void) | null = null
     ) {
         Logger.info('Creating DBusClient for ' + dbus_interface + ' at ' + object_path);
         this.dbus_interface = dbus_interface;
         this.object_path = object_path;
+        this._on_load_callback = callback;
         this._connected = this._connect();
         this._start_watching();
+        Logger.info('DBusClient created', this._connected);
     }
 
 
@@ -65,7 +82,7 @@ export default class DBusClient {
         connection: Gio.DBusConnection,
         name: string
     ) {
-        Logger.info('Name vanished: ' + name, this._connected);
+        Logger.info('Name vanished: ' + name);
     };
 
 
@@ -93,6 +110,10 @@ export default class DBusClient {
             );
 
             Logger.info('Connected to the Server', this._proxy);
+            if (this._on_load_callback) this._on_load_callback(this, 
+                this.dbus_interface, 
+                this.object_path
+            );
             this._listen_to_signals();
             return true;
         }
@@ -138,13 +159,20 @@ export default class DBusClient {
     </property>
      */
     public get_version(): number | null {
-        Logger.info('Getting version');
+        if (!this._proxy) return null;
+        if (this._version) return this._version;
+
         try { 
             const value = this._proxy.get_cached_property('Version');
-            Logger.info('Version', value);
-            return Number(value);
+            const parsed = Number(value);
+            if (isNaN(parsed)) return null;
+            this._version = parsed;
+            return parsed;
         }
-        catch (error) { return null; }
+        catch (error) { 
+            Logger.error('Error getting version: ' + error);
+            return null; 
+        }
     };
 
 
@@ -161,13 +189,19 @@ export default class DBusClient {
     </property>
      */
     public get_status(): string | null {
-        Logger.info('Getting status');
+        if (!this._proxy) return null;
+        if (this._status) return this._status;
+
         try { 
             const value = this._proxy.get_cached_property('Status');
-            Logger.info('Status', value);
-            return String(value);
+            const parsed = String(value);
+            this._status = parsed;
+            return parsed;
         }
-        catch (error) { return null; }
+        catch (error) { 
+            Logger.error('Error getting status: ' + error);
+            return null; 
+        }
     };
 
 
@@ -224,7 +258,7 @@ export default class DBusClient {
     public get_layout(
         parent_id: number,
         recursion_depth: number,
-        property_names: string[]
+        property_names: string[] = []
     ): {
         revision: number,
         layout: any
@@ -239,7 +273,10 @@ export default class DBusClient {
                 null
             ).unpack();
         }
-        catch (error) { return null; }
+        catch (error) { 
+            Logger.error('Error getting layout: ' + error);
+            return null; 
+        }
     };
 
 
@@ -277,8 +314,8 @@ export default class DBusClient {
     </method>
      */
     public get_group_properties(
-        ids: number[],
-        property_names: string[]
+        ids: number[] = [],
+        property_names: string[] = []
     ): {
         properties: any
     } | null {
@@ -292,7 +329,10 @@ export default class DBusClient {
                 null
             ).unpack();
         }
-        catch (error) { return null; }
+        catch (error) { 
+            Logger.error('Error getting group properties: ' + error);
+            return null; 
+        }
     };
 
 
@@ -330,7 +370,10 @@ export default class DBusClient {
                 null
             ).unpack();
         }
-        catch (error) { return null; }
+        catch (error) { 
+            Logger.error('Error getting property: ' + error);
+            return null; 
+        }
     };
 
 
@@ -379,7 +422,9 @@ export default class DBusClient {
                 null
             );
         }
-        catch (error) { }
+        catch (error) { 
+            Logger.error('Error sending event: ' + error);
+        }
     };
 
 
@@ -416,7 +461,10 @@ export default class DBusClient {
                 null
             ).unpack();
         }
-        catch (error) { return false; }
+        catch (error) { 
+            Logger.error('Error sending about to show: ' + error);
+            return false; 
+        }
     };
 
 

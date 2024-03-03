@@ -4,6 +4,7 @@ import Logger from '../logger/log';
 import Type from '../logger/type';
 import DBusClient from './client';
 
+
 export default class DBusRegistrar {
 
     public static readonly INTERFACE: string = 'com.canonical.AppMenu.Registrar';
@@ -22,6 +23,8 @@ export default class DBusRegistrar {
         menu_object_path: string,
         dbus: DBusClient
     }> = new Map();
+
+
 
     /**
      * @name constructor
@@ -225,14 +228,22 @@ export default class DBusRegistrar {
             Logger.info('Registering window: ' + window_id);
             Logger.info('Menu Object Path: ' + menu_object_path);
             if (this._window_map.has(window_id)) Logger.warn('Window already registered');
-            this._window_map.set(window_id, {
-                window_id: window_id,
-                menu_object_path: menu_object_path,
-                dbus: new DBusClient(
-                    'com.canonical.dbusmenu',
-                    menu_object_path
-                )
-            });
+
+            const mm = Gio.DBusMenuModel.get(
+                Gio.DBus.session,
+                'com.canonical.menu',
+                menu_object_path
+            );
+
+            Logger.info('Menu Model: ' + mm);
+            Logger.info('Menu Model: ' + mm.get_n_items());
+
+            const items = mm.get_n_items();
+            for (let i = 0; i < items; i++) {
+                const item = mm.get_item_attribute_value(i, null, null);
+                Logger.info('Item: ' + item);
+            }
+
         },
 
         
